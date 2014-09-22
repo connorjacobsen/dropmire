@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Dropmire::VERSION
   spec.authors       = ["Connor Jacobsen"]
   spec.email         = ["jacobsen.connor@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{A simple way to collect data from US driver's licenses.}
+  spec.description   = %q{A simple way to collect data from US driver's licenses with a card reader.}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
