@@ -1,5 +1,5 @@
 require "dropmire/version"
+require "dropmire/parser"
 
 module Dropmire
-  # Your code goes here...
 end
