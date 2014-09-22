@@ -1,6 +1,6 @@
 # Dropmire
 
-TODO: Write a gem description
+Dropmire is a gem for collecting data from scanning a government issued Driver's License, and building a useful Ruby object based on the correct state.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Coming soon...
 
 ## Contributing
 
