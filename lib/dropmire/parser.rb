@@ -20,8 +20,8 @@ module Dropmire
       @attrs
     end
 
-    def address(text)
-      /\A[%][a-zA-Z]*/.match(text).to_s
+    def address
+      /\A[%][a-zA-Z]*/.match(@text).to_s
     end
 
     def state(addr)
@@ -34,7 +34,7 @@ module Dropmire
     end
 
     def parse_address
-      addr = address @text
+      addr = address
       @attrs[:state] = state(addr)
       @attrs[:city]  = city(addr)
       [@attrs[:city], @attrs[:state]]

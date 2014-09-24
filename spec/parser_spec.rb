@@ -10,7 +10,26 @@ describe Dropmire::Parser do
     expect(subject.class).to eql Dropmire::Parser
   end
 
-  describe "#addr" do
+  describe "#address" do
+    it "returns the address section" do
+      expect(subject.address).to eql "%FLTALLAHASSEE"
+    end
+  end
+
+  describe "#state" do
+    it "returns the correct state" do
+      addr = subject.address
+
+      expect(subject.state(addr)).to eql "FL"
+    end
+  end
+
+  describe "#city" do
+    it "returns the correct city" do
+      addr = subject.address
+
+      expect(subject.city(addr)).to eql "Tallahassee"
+    end
   end
 
   describe "#parse_address" do
