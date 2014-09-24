@@ -39,5 +39,11 @@ module Dropmire
       @attrs[:city]  = city(addr)
       [@attrs[:city], @attrs[:state]]
     end
+
+    def full_name_string
+      str = /[\^][A-Z]*[\$][A-Z]*[\$][A-Z]*[\^]/.match(@text).to_s
+      len = str.length-2
+      str[1..len]
+    end
   end
 end

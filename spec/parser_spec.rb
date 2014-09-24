@@ -2,7 +2,7 @@ require 'dropmire'
 # require 'spec_helper'
 
 describe Dropmire::Parser do
-  @demo_text = ENV['DL_STRING']
+  @demo_text = """%FLTALLAHASSEE^JACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199399070=?+! 323124522  E               1602                                   ECCECC00000?"""
   parser = Dropmire::Parser.new(@demo_text)
   subject { parser }
 
@@ -35,6 +35,13 @@ describe Dropmire::Parser do
   describe "#parse_address" do
     it "returns correct values" do
       expect(subject.parse_address).to eql ["Tallahassee", "FL"]
+    end
+  end
+
+  describe "#full_name_string" do
+    it "returns the correct string" do
+      name_string = "JACOBSEN$CONNOR$ALAN"
+      expect(subject.full_name_string).to eql name_string
     end
   end
 end
