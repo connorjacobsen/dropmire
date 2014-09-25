@@ -45,5 +45,17 @@ module Dropmire
       len = str.length-2
       str[1..len]
     end
+
+    def split_name
+      full_name_string.split('$')
+    end
+
+    def set_names
+      names = split_name
+      @attrs[:first_name] = names[1].capitalize
+      @attrs[:last_name]  = names[0].capitalize
+      @attrs[:middle_name]  = names[2].capitalize
+      [@attrs[:first_name], @attrs[:middle_name], @attrs[:last_name]]
+    end
   end
 end
