@@ -44,4 +44,11 @@ describe Dropmire::Parser do
       expect(subject.full_name_string).to eql name_string
     end
   end
+
+  describe "#set_names" do
+    it "returns the correct array of strings" do
+      name_arr = ["Connor", "Alan", "Jacobsen"]
+      expect(subject.set_names).to eql name_arr
+    end
+  end
 end
