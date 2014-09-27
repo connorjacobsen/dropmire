@@ -38,17 +38,25 @@ describe Dropmire::Parser do
     end
   end
 
-  describe "#full_name_string" do
-    it "returns the correct string" do
-      name_string = "JACOBSEN$CONNOR$ALAN"
-      expect(subject.full_name_string).to eql name_string
+  describe "#carrot_string" do
+    it "returns the correct array" do
+      carrot_arr = ["JACOBSEN$CONNOR$ALAN", "6357 SINKOLA DR"]
+      expect(subject.carrot_string).to eql carrot_arr
     end
   end
 
-  describe "#set_names" do
+  describe "#names" do
     it "returns the correct array of strings" do
-      name_arr = ["Connor", "Alan", "Jacobsen"]
-      expect(subject.set_names).to eql name_arr
+      name_hash = {first: "Connor", middle: "Alan", last: "Jacobsen"}
+      expect(subject.names(%w(JACOBSEN CONNOR ALAN))).to eql name_hash
+    end
+  end
+
+  describe "street" do
+    it "returns the correct string" do
+      the_street = "6357 SINKOLA DR"
+      addr_hash = {street: the_street}
+      expect(subject.street(the_street)).to eql addr_hash
     end
   end
 end

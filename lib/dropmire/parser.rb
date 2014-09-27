@@ -33,6 +33,18 @@ module Dropmire
       addr[3..l].capitalize
     end
 
+    def carrot_string
+      str = /\^(.*)\^/.match(@text).to_s
+      len = str.length-2
+      str[1..len].split('^')
+    end
+
+    def parse_carrot_string
+      name_string, street_string = carrot_string
+      names split_name(name_string)
+      street street_string
+    end
+
     def parse_address
       addr = address
       @attrs[:state] = state(addr)
@@ -40,22 +52,22 @@ module Dropmire
       [@attrs[:city], @attrs[:state]]
     end
 
-    def full_name_string
-      str = /[\^][A-Z]*[\$][A-Z]*[\$][A-Z]*[\^]/.match(@text).to_s
-      len = str.length-2
-      str[1..len]
+    def split_name(name)
+      name.split('$')
     end
 
-    def split_name
-      full_name_string.split('$')
+    def names(names)
+      @attrs[:name] = {
+        first:  names[1].capitalize,
+        last:   names[0].capitalize,
+        middle: names[2].capitalize
+      }
     end
 
-    def set_names
-      names = split_name
-      @attrs[:first_name] = names[1].capitalize
-      @attrs[:last_name]  = names[0].capitalize
-      @attrs[:middle_name]  = names[2].capitalize
-      [@attrs[:first_name], @attrs[:middle_name], @attrs[:last_name]]
+    def street(street)
+      @attrs[:address] = {
+        street: street
+      }
     end
   end
 end
