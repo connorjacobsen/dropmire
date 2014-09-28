@@ -2,7 +2,9 @@
 # by sound, as pronounced in English.
 module Dropmire
   module Soundex
+
     class << self
+
       def soundex(str_or_arr)
         case str_or_arr
         when String
@@ -62,6 +64,8 @@ module Dropmire
           '0'
         end
       end
+      
     end
+
   end
 end
