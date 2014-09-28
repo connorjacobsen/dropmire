@@ -23,3 +23,6 @@ mkmf.log
 
 # ignore application.yml
 config/application.yml
+
+# keep test data private
+spec/demo.txt
