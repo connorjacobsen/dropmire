@@ -22,7 +22,6 @@ module Dropmire
 
         soundex_code = str[0]
         last_code = get_code str[0]
-        # str = remove_chars(str)
 
         len = str.length
         str[0..len].chars.each_index do |index|
@@ -40,10 +39,6 @@ module Dropmire
         end
 
         return soundex_code.ljust(4, '0')
-      end
-
-      def remove_chars(str)
-        str.gsub(/[AEHIOUWY]/, '')
       end
 
       def get_code(char)
@@ -64,7 +59,7 @@ module Dropmire
           '0'
         end
       end
-      
+
     end
 
   end
