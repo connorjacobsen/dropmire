@@ -18,7 +18,54 @@ Or install it yourself as:
 
 ## Usage
 
-Coming soon...
+Install the gem:
+
+```bash
+gem install dropmire
+```
+
+Or add to Gemfile:
+
+```bash
+gem 'dropmire'
+```
+
+Do cool stuff
+
+```ruby
+person = Dropmire::Identity.new("""Your scanned input here!""")
+
+# use your super cool new object
+person.first_name
+# => 'John'
+
+person.middle_name
+# => 'Pearce'
+
+person.last_name
+# => 'Doe'
+
+person.date_of_birth
+# => '1993-06-07'
+
+person.drivers_license_number
+# => 'D21242193207'
+
+person.drivers_license_expiration_date
+# => '2015-06'
+
+person.street
+# => '1234 Main St'
+
+person.city
+# => 'Tallahassee'
+
+person.state
+# => 'State'
+
+person.zipcode
+# => '12345'
+```
 
 ## Contributing
 
