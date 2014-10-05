@@ -46,7 +46,7 @@ module Dropmire
       attrs[:name][:last]
     end
 
-    def drivers_license_num
+    def drivers_license_number
       attrs[:license_num]
     end
 

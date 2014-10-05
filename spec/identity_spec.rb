@@ -54,7 +54,7 @@ describe Dropmire::Identity do
     end
   end
 
-  describe "#drivers_license_num" do
+  describe "#drivers_license_number" do
     it "returns correct value" do
       expect(subject.drivers_license_num).to eql "J21210193207"
     end
