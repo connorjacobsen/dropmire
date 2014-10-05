@@ -1,3 +1,5 @@
+require 'dropmire/ext/string'
+
 module Dropmire
   class Parser
     # Public: Creates a new Dropmire::Parser.
@@ -13,11 +15,22 @@ module Dropmire
     # Returns the Hash of results from the string.
     def initialize(text, options = {})
       @text = text
-      @attrs = {} # empty hash for the parsed values
+      @attrs = {:address=>{}} # empty hash for the parsed values
     end
 
     def attrs
       @attrs
+    end
+
+    def parse
+      parse_methods.each do |method|
+        self.send method
+      end
+    end
+
+    def parse_methods
+      [ :parse_address, :parse_carrot_string, :date_of_birth, :zipcode,
+        :license_class, :expiration_date, :parse_license_num ]
     end
 
     def address
@@ -47,9 +60,10 @@ module Dropmire
 
     def parse_address
       addr = address
-      @attrs[:state] = state(addr)
-      @attrs[:city]  = city(addr)
-      [@attrs[:city], @attrs[:state]]
+      @attrs[:address][:state] = state(addr)
+      @attrs[:address][:city] = city(addr)
+
+      [@attrs[:address][:city], @attrs[:address][:state]]
     end
 
     def split_name(name)
@@ -65,9 +79,62 @@ module Dropmire
     end
 
     def street(street)
-      @attrs[:address] = {
-        street: street
-      }
+      ary = street.split(' ')
+      str = []
+      ary.each do |s|
+        str << s.capitalize
+      end
+      @attrs[:address][:street] = str.join(' ')
+    end
+
+    def zipcode
+      str = /![\s]*[0-9]*/.match(@text).to_s
+      zip = str[1..(str.length)].strip
+      @attrs[:address][:zipcode] = zip[0,5]
+    end
+
+    def license_class
+      str = /![\s]*[0-9]*[\s]*[A-Z]/.match(@text).to_s
+      @attrs[:license_class] = str[-1]
+    end
+
+    def id_string
+      /;[0-9]*=/.match(@text).to_s.gsub(/[;=]/, '')
+    end
+
+    def iin(str)
+      @attrs[:iin] = str[0,6]
+    end
+
+    def license_num(str)
+      num_len = str.length - 8
+      @attrs[:license_num] = str[6,2].to_char.upcase + str[8, num_len]
+    end
+
+    def parse_license_num
+      id_str = id_string
+      iin(id_str)
+      license_num(id_str)
+    end
+
+    def expiration_date
+      str = /=[0-9]{4}/.match(@text).to_s
+      @attrs[:expiration_date] = transform_date str[1,4]
+    end
+
+    def date_of_birth
+      str = /=[0-9]*/.match(@text).to_s
+      dob = str[5,8]
+      year = dob[0,4]
+      month = dob[4,2]
+      day = dob[6,2]
+      @attrs[:date_of_birth] = "#{year}-#{month}-#{day}"
+    end
+
+    def transform_date(date)
+      y = date[0,2]
+      m = date[2,2]
+      "20#{y}-#{m}"
     end
   end
 end
