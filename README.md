@@ -27,7 +27,7 @@ gem install dropmire
 Or add to Gemfile:
 
 ```bash
-gem 'dropmire'
+gem 'dropmire', '~> 0.1.1'
 ```
 
 Do cool stuff
