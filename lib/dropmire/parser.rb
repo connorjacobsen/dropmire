@@ -126,7 +126,7 @@ module Dropmire
       str = /=[0-9]*/.match(@text).to_s
       dob = str[5,8]
       year = dob[0,4]
-      month = dob[4,2]
+      month = str[3,2]
       day = dob[6,2]
       @attrs[:date_of_birth] = "#{year}-#{month}-#{day}"
     end
