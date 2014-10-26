@@ -11,13 +11,20 @@ describe Dropmire::Parser do
 
   describe "#address" do
     it "returns the address section" do
-      expect(subject.address).to eql "%FLTALLAHASSEE"
+      expect(subject.address(subject.instance_variable_get(:@text))).to eql "%FLTALLAHASSEE"
+    end
+
+    context "when city is two words" do
+      it "returns the address section" do
+        @demo_text2 = """%FLPALM CITY^JACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
+        expect(subject.address(@demo_text2)).to eql "%FLPALM CITY"
+      end
     end
   end
 
   describe "#state" do
     it "returns the correct state" do
-      addr = subject.address
+      addr = subject.address(subject.instance_variable_get(:@text))
 
       expect(subject.state(addr)).to eql "FL"
     end
@@ -25,7 +32,7 @@ describe Dropmire::Parser do
 
   describe "#city" do
     it "returns the correct city" do
-      addr = subject.address
+      addr = subject.address(subject.instance_variable_get(:@text))
 
       expect(subject.city(addr)).to eql "Tallahassee"
     end
@@ -94,7 +101,7 @@ describe Dropmire::Parser do
 
   describe "#expiration_date" do
     it "returns the correct date" do
-      expect(subject.expiration_date).to eql "2015-06"
+      expect(subject.expiration_date("=1506199306070")).to eql "2015-06-07"
     end
   end
 
@@ -107,7 +114,7 @@ describe Dropmire::Parser do
   describe "#date_of_birth" do
     context "Florida" do
       it "returns correct date_of_birth" do
-        expect(subject.date_of_birth).to eql "1993-06-07"
+        expect(subject.date_of_birth("=1506199306070")).to eql "1993-06-07"
       end
     end
   end

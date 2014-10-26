@@ -22,19 +22,29 @@ module Dropmire
       @attrs
     end
 
+    def text
+      @text
+    end
+
     def parse
-      parse_methods.each do |method|
-        self.send method
-      end
+      parse_methods.each { |method| self.send method }
     end
 
     def parse_methods
-      [ :parse_address, :parse_carrot_string, :date_of_birth, :zipcode,
-        :license_class, :expiration_date, :parse_license_num ]
+      [ :parse_address, :parse_carrot_string, :parse_dates, 
+        :zipcode, :license_class, :parse_license_num ]
     end
 
-    def address
-      /\A[%][a-zA-Z]*/.match(@text).to_s
+    def parse_address
+      addr = address(@text)
+      @attrs[:address][:state] = state(addr)
+      @attrs[:address][:city] = city(addr)
+
+      [@attrs[:address][:city], @attrs[:address][:state]]
+    end
+
+    def address(text)
+      /\A[%][a-zA-Z\s]*/.match(text).to_s
     end
 
     def state(addr)
@@ -56,14 +66,6 @@ module Dropmire
       name_string, street_string = carrot_string
       names split_name(name_string)
       street street_string
-    end
-
-    def parse_address
-      addr = address
-      @attrs[:address][:state] = state(addr)
-      @attrs[:address][:city] = city(addr)
-
-      [@attrs[:address][:city], @attrs[:address][:state]]
     end
 
     def split_name(name)
@@ -117,13 +119,17 @@ module Dropmire
       license_num(id_str)
     end
 
-    def expiration_date
-      str = /=[0-9]{4}/.match(@text).to_s
-      @attrs[:expiration_date] = transform_date str[1,4]
+    def parse_dates
+      str = /=[0-9]*/.match(@text).to_s
+      date_of_birth(str)
+      expiration_date(str)
     end
 
-    def date_of_birth
-      str = /=[0-9]*/.match(@text).to_s
+    def expiration_date(dob)
+      @attrs[:expiration_date] = transform_date(dob[1,4]) + "-#{dob[11,2]}"
+    end
+
+    def date_of_birth(str)
       dob = str[5,8]
       year = dob[0,4]
       month = str[3,2]
