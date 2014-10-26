@@ -22,10 +22,12 @@ module Dropmire
       @attrs
     end
 
+    def text
+      @text
+    end
+
     def parse
-      parse_methods.each do |method|
-        self.send method
-      end
+      parse_methods.each { |method| self.send method }
     end
 
     def parse_methods
@@ -33,8 +35,16 @@ module Dropmire
         :license_class, :expiration_date, :parse_license_num ]
     end
 
-    def address
-      /\A[%][a-zA-Z]*/.match(@text).to_s
+    def parse_address
+      addr = address(@text)
+      @attrs[:address][:state] = state(addr)
+      @attrs[:address][:city] = city(addr)
+
+      [@attrs[:address][:city], @attrs[:address][:state]]
+    end
+
+    def address(text)
+      /\A[%][a-zA-Z\s]*/.match(text).to_s
     end
 
     def state(addr)
@@ -56,14 +66,6 @@ module Dropmire
       name_string, street_string = carrot_string
       names split_name(name_string)
       street street_string
-    end
-
-    def parse_address
-      addr = address
-      @attrs[:address][:state] = state(addr)
-      @attrs[:address][:city] = city(addr)
-
-      [@attrs[:address][:city], @attrs[:address][:state]]
     end
 
     def split_name(name)

@@ -11,13 +11,20 @@ describe Dropmire::Parser do
 
   describe "#address" do
     it "returns the address section" do
-      expect(subject.address).to eql "%FLTALLAHASSEE"
+      expect(subject.address(subject.instance_variable_get(:@text))).to eql "%FLTALLAHASSEE"
+    end
+
+    context "when city is two words" do
+      it "returns the address section" do
+        @demo_text2 = """%FLPALM CITY^JACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
+        expect(subject.address(@demo_text2)).to eql "%FLPALM CITY"
+      end
     end
   end
 
   describe "#state" do
     it "returns the correct state" do
-      addr = subject.address
+      addr = subject.address(subject.instance_variable_get(:@text))
 
       expect(subject.state(addr)).to eql "FL"
     end
@@ -25,7 +32,7 @@ describe Dropmire::Parser do
 
   describe "#city" do
     it "returns the correct city" do
-      addr = subject.address
+      addr = subject.address(subject.instance_variable_get(:@text))
 
       expect(subject.city(addr)).to eql "Tallahassee"
     end
