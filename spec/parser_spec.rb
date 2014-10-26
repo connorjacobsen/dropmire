@@ -101,7 +101,7 @@ describe Dropmire::Parser do
 
   describe "#expiration_date" do
     it "returns the correct date" do
-      expect(subject.expiration_date).to eql "2015-06"
+      expect(subject.expiration_date("=1506199306070")).to eql "2015-06-07"
     end
   end
 
@@ -114,7 +114,7 @@ describe Dropmire::Parser do
   describe "#date_of_birth" do
     context "Florida" do
       it "returns correct date_of_birth" do
-        expect(subject.date_of_birth).to eql "1993-06-07"
+        expect(subject.date_of_birth("=1506199306070")).to eql "1993-06-07"
       end
     end
   end

@@ -31,8 +31,8 @@ module Dropmire
     end
 
     def parse_methods
-      [ :parse_address, :parse_carrot_string, :date_of_birth, :zipcode,
-        :license_class, :expiration_date, :parse_license_num ]
+      [ :parse_address, :parse_carrot_string, :parse_dates, 
+        :zipcode, :license_class, :parse_license_num ]
     end
 
     def parse_address
@@ -119,13 +119,17 @@ module Dropmire
       license_num(id_str)
     end
 
-    def expiration_date
-      str = /=[0-9]{4}/.match(@text).to_s
-      @attrs[:expiration_date] = transform_date str[1,4]
+    def parse_dates
+      str = /=[0-9]*/.match(@text).to_s
+      date_of_birth(str)
+      expiration_date(str)
     end
 
-    def date_of_birth
-      str = /=[0-9]*/.match(@text).to_s
+    def expiration_date(dob)
+      @attrs[:expiration_date] = transform_date(dob[1,4]) + "-#{dob[11,2]}"
+    end
+
+    def date_of_birth(str)
       dob = str[5,8]
       year = dob[0,4]
       month = str[3,2]
