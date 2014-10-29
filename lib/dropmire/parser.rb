@@ -56,14 +56,14 @@ module Dropmire
       addr[3..l].capitalize
     end
 
-    def carrot_string
-      str = /\^(.*)\^/.match(@text).to_s
+    def carrot_string(text)
+      str = /\^(.*)\^/.match(text).to_s
       len = str.length-2
       str[1..len].split('^')
     end
 
     def parse_carrot_string
-      name_string, street_string = carrot_string
+      name_string, street_string = carrot_string(@text)
       names split_name(name_string)
       street street_string
     end
@@ -76,8 +76,15 @@ module Dropmire
       @attrs[:name] = {
         first:  names[1].capitalize,
         last:   names[0].capitalize,
-        middle: names[2].capitalize
+        middle: capitalize_or_nil(names[2])
       }
+    end
+
+    # Capitalizes and returns @name if not nil, returns nil otherwise.
+    def capitalize_or_nil(name)
+      unless name.nil?
+        name.capitalize
+      end
     end
 
     def street(street)
