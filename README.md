@@ -71,7 +71,14 @@ person.zipcode
 
 ## Testing
 
-To run the test suite, run `rspec spec/`
+To run the test suite:
+```bash
+rspec spec/
+
+# or the individual files
+rspec spec/parser_spec.rb
+rspec spec/identity_spec.rb
+```
 
 ## Contributing
 
