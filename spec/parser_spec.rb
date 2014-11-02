@@ -47,14 +47,26 @@ describe Dropmire::Parser do
   describe "#carrot_string" do
     it "returns the correct array" do
       carrot_arr = ["JACOBSEN$CONNOR$ALAN", "6357 SINKOLA DR"]
-      expect(subject.carrot_string).to eql carrot_arr
+      @demo_text = """%FLPALM CITY^JACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
+      expect(subject.carrot_string(@demo_text)).to eql carrot_arr
     end
   end
 
   describe "#names" do
     it "returns the correct array of strings" do
-      name_hash = {first: "Connor", middle: "Alan", last: "Jacobsen"}
-      expect(subject.names(%w(JACOBSEN CONNOR ALAN))).to eql name_hash
+      name_arr = %w(Connor Alan Jacobsen)
+      expect(subject.names(%w(JACOBSEN CONNOR ALAN))).to eql name_arr
+    end
+
+    context "when middle name not present" do
+      it "returns the correct hash" do
+        @demo_text = """%FLPALM CITY^JACOBSEN$CONNOR$^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
+        carrot_arr = subject.carrot_string(@demo_text)
+        name_string = carrot_arr.first
+        name_arr = subject.split_name(name_string)
+        val = ["Connor", nil, "Jacobsen"]
+        expect(subject.names(name_arr)).to eql val
+      end
     end
   end
 

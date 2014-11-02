@@ -15,7 +15,7 @@ module Dropmire
     # Returns the Hash of results from the string.
     def initialize(text, options = {})
       @text = text
-      @attrs = {:address=>{}} # empty hash for the parsed values
+      @attrs = {}
     end
 
     def attrs
@@ -37,10 +37,10 @@ module Dropmire
 
     def parse_address
       addr = address(@text)
-      @attrs[:address][:state] = state(addr)
-      @attrs[:address][:city] = city(addr)
+      @attrs[:state] = state(addr)
+      @attrs[:city] = city(addr)
 
-      [@attrs[:address][:city], @attrs[:address][:state]]
+      [@attrs[:city], @attrs[:state]]
     end
 
     def address(text)
@@ -56,14 +56,14 @@ module Dropmire
       addr[3..l].capitalize
     end
 
-    def carrot_string
-      str = /\^(.*)\^/.match(@text).to_s
+    def carrot_string(text)
+      str = /\^(.*)\^/.match(text).to_s
       len = str.length-2
       str[1..len].split('^')
     end
 
     def parse_carrot_string
-      name_string, street_string = carrot_string
+      name_string, street_string = carrot_string(@text)
       names split_name(name_string)
       street street_string
     end
@@ -73,11 +73,18 @@ module Dropmire
     end
 
     def names(names)
-      @attrs[:name] = {
-        first:  names[1].capitalize,
-        last:   names[0].capitalize,
-        middle: names[2].capitalize
-      }
+      @attrs[:first_name]  = names[1].capitalize
+      @attrs[:last_name]   = names[0].capitalize
+      @attrs[:middle_name] = capitalize_or_nil(names[2])
+
+      [@attrs[:first_name], @attrs[:middle_name], @attrs[:last_name]]
+    end
+
+    # Capitalizes and returns @name if not nil, returns nil otherwise.
+    def capitalize_or_nil(name)
+      unless name.nil?
+        name.capitalize
+      end
     end
 
     def street(street)
@@ -86,13 +93,13 @@ module Dropmire
       ary.each do |s|
         str << s.capitalize
       end
-      @attrs[:address][:street] = str.join(' ')
+      @attrs[:street] = str.join(' ')
     end
 
     def zipcode
       str = /![\s]*[0-9]*/.match(@text).to_s
       zip = str[1..(str.length)].strip
-      @attrs[:address][:zipcode] = zip[0,5]
+      @attrs[:zipcode] = zip[0,5]
     end
 
     def license_class
