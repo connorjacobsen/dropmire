@@ -54,8 +54,8 @@ describe Dropmire::Parser do
 
   describe "#names" do
     it "returns the correct array of strings" do
-      name_hash = {first: "Connor", middle: "Alan", last: "Jacobsen"}
-      expect(subject.names(%w(JACOBSEN CONNOR ALAN))).to eql name_hash
+      name_arr = %w(Connor Alan Jacobsen)
+      expect(subject.names(%w(JACOBSEN CONNOR ALAN))).to eql name_arr
     end
 
     context "when middle name not present" do
@@ -64,8 +64,8 @@ describe Dropmire::Parser do
         carrot_arr = subject.carrot_string(@demo_text)
         name_string = carrot_arr.first
         name_arr = subject.split_name(name_string)
-        hash = {first: "Connor", middle: nil, last: "Jacobsen"}
-        expect(subject.names(name_arr)).to eql hash
+        val = ["Connor", nil, "Jacobsen"]
+        expect(subject.names(name_arr)).to eql val
       end
     end
   end

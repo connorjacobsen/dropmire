@@ -68,7 +68,7 @@ describe Dropmire::Identity do
 
   describe "#drivers_license_expiration_date" do
     it "returns correct value" do
-      expect(subject.drivers_license_expiration_date).to eql "2015-06"
+      expect(subject.drivers_license_expiration_date).to eql "2015-06-07"
     end
   end
 
