@@ -69,6 +69,10 @@ person.zipcode
 # => '12345'
 ```
 
+## Testing
+
+To run the test suite, run `rspec spec/`
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/dropmire/fork )
