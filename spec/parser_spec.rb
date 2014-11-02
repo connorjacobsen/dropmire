@@ -36,6 +36,14 @@ describe Dropmire::Parser do
 
       expect(subject.city(addr)).to eql "Tallahassee"
     end
+
+    describe "when city is two words" do
+      it "returns the correct city" do
+        @demo_text2 = """%FLPALM CITY^JACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
+        addr = subject.address(@demo_text2)
+        expect(subject.city(addr)).to eql "Palm City"
+      end
+    end
   end
 
   describe "#parse_address" do
