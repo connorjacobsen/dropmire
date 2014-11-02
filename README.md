@@ -54,7 +54,7 @@ person.drivers_license_number
 # => 'D21242193207'
 
 person.drivers_license_expiration_date
-# => '2015-06'
+# => '2015-06-07'
 
 person.street
 # => '1234 Main St'
