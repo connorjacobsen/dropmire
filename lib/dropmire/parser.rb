@@ -53,7 +53,9 @@ module Dropmire
 
     def city(addr)
       l = addr.length-1
-      addr[3..l].capitalize
+      city_arr = addr[3..l].split(' ')
+      city_arr.each { |c| c.capitalize! }
+      city_arr.join(' ')
     end
 
     def carrot_string(text)
