@@ -1,4 +1,5 @@
 require 'dropmire/ext/string'
+require 'dropmire/validator'
 
 module Dropmire
   class Parser
@@ -16,6 +17,8 @@ module Dropmire
     def initialize(text, options = {})
       @text = text
       @attrs = {}
+
+      Dropmire::Validator.new(@text)
     end
 
     def attrs
