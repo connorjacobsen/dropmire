@@ -72,7 +72,7 @@ describe Dropmire::Parser do
         carrot_arr = subject.carrot_string(@demo_text)
         name_string = carrot_arr.first
         name_arr = subject.split_name(name_string)
-        val = ["Connor", nil, "Jacobsen"]
+        val = ["Connor", "", "Jacobsen"]
         expect(subject.names(name_arr)).to eql val
       end
     end
