@@ -82,6 +82,10 @@ module Dropmire
       @attrs[:last_name]   = names[0].capitalize
       @attrs[:middle_name] = capitalize_or_nil(names[2])
 
+      # Temporary patch here, otherwise the Dropmire::Identity#method_missing
+      # won't recognize the middle_name method.
+      @attrs[:middle_name] = "" if @attrs[:middle_name].nil?
+
       [@attrs[:first_name], @attrs[:middle_name], @attrs[:last_name]]
     end
 
