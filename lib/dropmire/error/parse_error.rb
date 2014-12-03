@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), 'error')
+
 module Dropmire
   class ParseError < Error
     def initialize(message="Malformed input string", text=nil)

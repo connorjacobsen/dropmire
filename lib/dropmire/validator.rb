@@ -14,7 +14,7 @@ module Dropmire
     end
 
     def regex
-      /%\w*\^\w*\$\w*\$\w*\^[\w\s]*\^\s*\?;\d*=\d*=\?\+\!\s*\d*[\s\w]*\?/
+      /%[\w\s]*\^[\w\s]*\$[\w\s]*\$[\w\s]*\^[\w\s]*\^\s*\?;\d*=\d*=\?\+\!\s*\d*[\s\w]*\?/
     end
   end
 end
