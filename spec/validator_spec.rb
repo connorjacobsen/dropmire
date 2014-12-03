@@ -14,5 +14,10 @@ describe Dropmire::Validator do
       @text2 = """%FLTALLAHASSEEJACOBSEN$CONNOR$ALAN^6357 SINKOLA DR^                            ?;6360101021210193207=1506199306070=?+! 323124522  E               1602                                   ECCECC00000?"""
       expect { Dropmire::Validator.new(@text2) }.to raise_error
     end
+
+    it "raises exception for empty string" do
+      @text2 = ""
+      expect { Dropmire::Validator.new(@text2) }.to raise_error
+    end
   end
 end
